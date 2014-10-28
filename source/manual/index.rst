@@ -1,5 +1,5 @@
 ********************
-  The MyHDL manual  
+  Manual de  MyHDL  
 ********************
 
 .. toctree::

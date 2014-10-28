@@ -18,7 +18,7 @@ Pre requisitos
  Learning Python is one of the best time investments that engineering
  professionals can make  [#]_.
 
-Se necesita una comprensión básica de Python para usar MyHDL. Si no conoce
+Ud.  necesita una comprensión básica de Python para usar MyHDL. Si no conoce
 Python no se preocupe: es uno de los lenguajes de programación más fáciles
 [#]_.
 Aprender Python es uno de las mejores inversiones en tiempo que un
@@ -31,9 +31,9 @@ ingeniero o profesional puede hacer [#]_.
 
 Para novatos, http://docs.Pythonthon.org/tutorial es probablemente la
 mejor elección de un tutorial en línea. Para otras alternativas vea
-http://wiki.Pythonthon.org/moin/BeginnersGuide
+http://wiki.Python.org/moin/BeginnersGuide
 
-
+.. Buscar enlaces en español
 ..
  A working knowledge of a hardware description language such as Verilog or VHDL
  is helpful.
@@ -45,7 +45,7 @@ Verilog o VHDL es de ayuda.
  Code examples in this manual are sometimes shortened for clarity. Complete
  executable examples can be found in the distribution directory at
 
-Por claridad algunas veces se recortan los códigos por claridad. Los
+Por claridad, en este manual, algunas veces se recortan los códigos. Los
 ejecutable completos se pueden encontrar en la distribución directamente en
 :file:`example/manual/`.
 
@@ -62,7 +62,7 @@ Un pequeño tutorial en generadores
  Python 2.2. Because generators are the key concept in MyHDL, a small tutorial is
  included here.
 
-Los generadores se introdujeron en Python 2.2. Debido a que son un concepto
+Los generadores fueron introducidos en Python 2.2. Debido a que son un concepto
 clave en MyHDL, se incluye acá un pequeño tutorial.
 
 ..
@@ -78,8 +78,8 @@ Considere la siguiente función ilógica::
  You can see why it doesn't make a lot of sense. As soon as the first loop
  iteration is entered, the function returns::
 
-Ud. puede ver por qué no tiene mucho sentido. Cuando el primer bucle de
-iteración se ingrese, la función retorna::
+Ud. puede ver por qué no tiene mucho sentido. Cuando se ejecuta la primera
+iteración del bucle la función finaliza::
 
    >>> function()
    0
@@ -88,15 +88,16 @@ iteración se ingrese, la función retorna::
    Returning is fatal for the function call. Further loop iterations never get a
  chance, and nothing is left over from the function call when it returns.
 
-Retornar es fatal para la llamada a la función. Por lo tanto las iteraciones del
-bucle nunca tienen oportunidad de ejecutarse, y nada se deja sobre el llamado a la
+return es irreversible para el llamado a una función.
+Por lo tanto las iteraciones del
+bucle nunca tienen oportunidad de ejecutarse, y nada se sobra del llamado a la
 función cuando ella retorna.
 
 ..
- To change the function into a generator function, we replace :keyword:`return`
- with :keyword:`yield`::
+ To change the function into a generator function, we replace
+ :keyword:`return` with :keyword:`yield`::
 
-Para cambiar la función en una función generadora, reemplazamos
+Para convertir  una función en una función generadora, reemplazamos
 :keyword:`return` por :keyword:`yield`::
 
 
@@ -112,11 +113,12 @@ ahora obtenemos::
    <generator object at 0x815d5a8>
 
 ..
- When a generator function is called, it returns a generator object. A generator
- object supports the iterator protocol, which is an expensive way of saying that
- you can let it generate subsequent values by calling its :func:`next` method::
+ When a generator function is called, it returns a generator object. A
+ generator object supports the iterator protocol, which is an expensive way
+ of saying that you can let it generate subsequent values by calling its
+ :func:`next` method::
 
-Cuando una función generadora se invoca, ella retorna un objeto generador.
+Cuando se invoca una función generadora, ella retorna un objeto generador.
 Un objeto generador permite el protocolo iterador, que es una manera
 costosa de decir que Ud. puede generar valores subsecuentes invocando el
 método
