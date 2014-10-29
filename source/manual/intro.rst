@@ -241,16 +241,16 @@ será ejecutada en cada flanco de subida del reloj.
  with the two instances.
 
 
-La señal ``clk`` se contruye con el valor inicial de ``0``. Cuando se crea una
+La señal ``clk`` se contruye con un valor inicial de ``0``. Cuando se crea una
 instancia de cada módulo de hardware, la misma señal de reloj se pasa como
 argumento. El resultado es que las instancias están ahora conectadas a través
-de la señal de reloj. El objeto :class:`Simulation` está construido con dos
+de la señal de reloj. El objeto :class:`Simulation` está construido con las dos
 instancias.
 
 ..
  When we run the simulation, we get::
 
-Cuando ejecutemos la simulación obtendremos::
+Cuando ejecutamos la simulación obtendremos::
 
    % python hello2.py
    10 Hello World!
