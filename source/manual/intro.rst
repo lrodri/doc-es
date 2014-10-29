@@ -17,12 +17,10 @@ Una simulación básica de MyHDL
  :file:`example/manual/`.  Here are the contents of a MyHDL simulation script
  called :file:`hello1.py`::
 
-Introduciremos MyHDL con un ejemplo el clásico  ``Hola a todos``
-Todo el código del ejemplo se puede encontrar en el directorio
-de la distribución bajo 
-:func:`example/manual/`
-Aquí  está el contenido de un script de  simulación MyHDL llamado
-:func:`hello1.py`::
+Introduciremos MyHDL con el clásico ejemplo  ``Hello World`` Todo el
+código del ejemplo se puede encontrar en el directorio de la distribución
+bajo :func:`example/manual/` A continuación   el contenido de un guión de
+simulación MyHDL llamado :func:`hello1.py`::
 
    from myhdl import Signal, delay, always, now, Simulation
 
@@ -52,20 +50,21 @@ Cuando ejecutamos esta simulación, tendremos la siguiente salida::
    _SuspendSimulation: Simulated 30 timesteps
 
 ..
- The first line of the script imports a number of objects from the ``myhdl``
- package. In Python we can only use identifiers that are literally defined in the
- source file   [#]_.
+ The first line of the script imports a number of objects from the
+ ``myhdl`` package. In Python we can only use identifiers that are
+ literally defined in the source file   [#]_.
 
-La primera línea del guión importa un número de objetos desde el paquete
-``mydl``. En Python sólo podemos usar identificadores
+La primera línea del guión importa varios objetos desde el paquete
+``myhdl``. En Python sólo podemos usar identificadores
 que estén definidos literalmente en el archivo fuente [#]_.
 
  
 
 ..
  Then, we define a function called :func:`HelloWorld`. In MyHDL, hardware
- modules can be modeled using classic functions.  In particular, the parameter list
- is then used to define the interface. In this first example, the interface is empty.
+ modules can be modeled using classic functions.  In particular, the
+ parameter list is then used to define the interface. In this first
+ example, the interface is empty.
 
 
 Entonces, definimos una función llamada :func:`HelloWorld`
@@ -78,53 +77,51 @@ definir la interface. En el primer ejemplo, la interface está vacía.
 
 ..
  Inside the top level function we declare a local function called
- :func:`sayHello` that defines the desired behavior. This function is decorated
- with an :func:`always` decorator that has a delay  object as its parameter.  The
- meaning is that the function will be executed whenever the specified delay
- interval has expired.
+ :func:`sayHello` that defines the desired behavior. This function is
+ decorated with an :func:`always` decorator that has a delay  object as its
+ parameter.  The meaning is that the function will be executed whenever the
+ specified delay interval has expired.
 
 Dentro de la función de  nivel superior declaramos una función local llamada
 :func:`sayHello` que define el comportamiento deseado. Esta función está
-decorada con un decorador :func:`always` que tiene un objeto retardo como su
-parámetro. El significado es que la función será ejecutada en el caso que el
-intervalo de retardo halla expirado.
+decorada con un decorador :func:`always` que tiene como parámetro un objeto retardo. El significado es que la función será ejecutada en el caso que el
+intervalo de retardo especificado halla expirado.
 
 
 
 ..
- Behind the curtains, the :func:`always` decorator creates a Python *generator*
- and reuses the name of the decorated function for it. Generators are the
- fundamental objects in MyHDL, and we will say much more about them further on.
+ Behind the curtains, the :func:`always` decorator creates a Python
+ *generator* and reuses the name of the decorated function for it.
+ Generators are the fundamental objects in MyHDL, and we will say much more
+ about them further on.
 
-Tras bambalinas, el decorador
-`always()`
-crea un *generador* Python y reutiliza el nombre de la función decorada
-para ella. Los generadores son objetos fundamentales en MyHDL, diremos
-mucho más sobre ellos en el futuro.
+Tras bambalinas, el decorador `always()` crea un *generador* Python y
+reutiliza el nombre de la función decorada para ella. Los generadores son
+objetos fundamentales en MyHDL, diremos mucho más sobre ellos en el futuro.
 
 ..
  Finally, the top level function returns the local generator. This is the
  simplest case of the basic MyHDL code pattern to define the contents of a
  hardware module. We will describe the general case further on.
 
-Finalmente, la función de nivel superior retorna el generador loca. Esto es
-el caso más simple en el patrón de código de MyHDL para definir el
+Finalmente, la función de nivel superior retorna el generador local. Esto es
+el caso más simple en la plantilla de código de MyHDL para definir el
 contenido de un módulo de hardware. Describiremos el caso general más
 adelante.
 
 
 ..
  In MyHDL, we create an *instance* of a hardware module by calling the
- corresponding function. In the example, variable ``inst`` refers to an instance
- of :func:`HelloWorld`.  To simulate the instance, we pass it as an argument to a
- :class:`Simulation` object constructor.  We then run the simulation for the
- desired amount of timesteps.
+ corresponding function. In the example, variable ``inst`` refers to an
+ instance of :func:`HelloWorld`.  To simulate the instance, we pass it as
+ an argument to a :class:`Simulation` object constructor.  We then run the
+ simulation for the desired amount of timesteps.
 
-En MyHDL, creamos una *instancia* de un módulo de hardware invocando la función
-correspondiente . En el ejemplo la variable ``inst`` se refiere a una instancia
-de :func:`HellowWorld`. Para simular la instancia la pasamos como un
-argumento al objeto constructor :class:`Simulation`. Entonces corremos la
-simulación para la cantidad deseada de intervalos de tiempo.
+En MyHDL, creamos una *instancia* de un módulo de hardware invocando la
+función correspondiente. En el ejemplo la variable ``inst`` se refiere a
+una instancia de :func:`HellowWorld`. Para simular la instancia la pasamos
+como un argumento al objeto constructor :class:`Simulation`. Entonces
+ejecutamos la simulación para la cantidad deseada de intervalos de tiempo.
 
 
 
@@ -134,17 +131,15 @@ Señales, puertos y concurrencia
 ===============================
 
 ..
- In the previous section, we simulated a design with a single generator and no
- concurrency. Real hardware descriptions are typically
- massively concurrent. MyHDL supports this by allowing an arbitrary number of
+ In the previous section, we simulated a design with a single generator and
+ no concurrency. Real hardware descriptions are typically massively
+ concurrent. MyHDL supports this by allowing an arbitrary number of
  concurrently running generators.
 
 En la sección anterior, simulamos un diseño con un sólo generador y sin
 concurrencia. Las descripciones de hardware reales son típicamente
-concurrentes masivamente. MyHDL apoya esto permitiendo un número arbitrario
-de generadores ejecutandose concurrentement.
-
-
+masivamente concurrentes . MyHDL apoya esto permitiendo un número arbitrario
+de generadores ejecutandose concurrentemente.
 
 ..
  With concurrency comes the problem of deterministic communication. Hardware
@@ -154,19 +149,19 @@ de generadores ejecutandose concurrentement.
 
 Con la concurrencia viene el problema de la comunicación determinística.
 Los lenguajes de hardware usan objetos especiales para apoyar la
-comunicación deterministica entre código concurrente. En particular  
-MyHDL tiene un objeto  señal que es modelado de forma parecida luego de las
-señales VHDL.
+comunicación deterministica entre código concurrente. En particular,  MyHDL
+tiene un objeto  :class:`Signal`  que es modelado de forma parecida luego
+de las señales VHDL.
 
 
 ..
- We will demonstrate signals and concurrency by extending and modifying our first
- example. We define two hardware modules, one that drives a clock signal, and one
- that is sensitive to a positive edge on a clock signal::
+ We will demonstrate signals and concurrency by extending and modifying our
+ first example. We define two hardware modules, one that drives a clock
+ signal, and one that is sensitive to a positive edge on a clock signal::
 
-Mostraremos señaes y concurrencia extendiendo nuestro primer ejemplo.
-Definiremos dos módulos de hardware, uno que maneja una señal de reloj, y
-otra que es sensible a un flanco positivo en una señal de reloj::
+Mostraremos señales y concurrencia extendiendo y modificando nuestro primer
+ejemplo.  Definiremos dos módulos de hardware, uno que maneja una señal de
+reloj, y uno  que es sensible al flanco ascendente de una señal de reloj::
 
 
    from myhdl import Signal, delay, always, now, Simulation
@@ -203,44 +198,47 @@ otra que es sensible a un flanco positivo en una señal de reloj::
    single: Verilog; non-blocking assignment
 
 ..
- The clock driver function :func:`ClkDriver` has a clock signal as its parameter.
- This is how a *port* is modeled in MyHDL. The function defines a generator that
- continuously toggles a clock signal after a certain delay. A new value of a
- signal is specified by assigning to its ``next`` attribute. This is the MyHDL
- equivalent of  the VHDL signal assignment and the  Verilog non-blocking
- assignment.
+ The clock driver function :func:`ClkDriver` has a clock signal as its
+ parameter.  This is how a *port* is modeled in MyHDL. The function defines
+ a generator that continuously toggles a clock signal after a certain
+ delay. A new value of a signal is specified by assigning to its ``next``
+ attribute. This is the MyHDL equivalent of  the VHDL signal assignment and
+ the  Verilog non-blocking assignment.
 
 
-La función :func:`ClkDriver` tiene una señal de reloj como su parámetro. Esto
-es cómo se modela un *puerto* en MyHDL. La función define un generador que
-continuamente cambia una señal de reloj luego de cierto retardo. Un nuevo
-valor de una señal se especifica asignando al atributo ``next``. Esto es
-el equivalente en MyHDL de la asinación de señales en VHDL y la asignación
-de no-bloqueo en Verilog.
+La función :func:`ClkDriver` tiene una señal de reloj como su parámetro.
+Así es cómo se modela un *puerto* en MyHDL. La función define un generador
+que continuamente cambia una señal de reloj luego de cierto retardo. Se
+especifica un
+nuevo valor de una señal  asignando al atributo ``next``. Esto
+es el equivalente en MyHDL a la asinación de señales en VHDL y la
+asignación de no-bloqueo en Verilog.
 
 
 .. index:: single: wait; for a rising edge
 
 ..
- The :func:`HelloWorld` function is modified from the first example. It now also
- takes a clock signal as parameter. Its generator is made sensitive to a rising
- edge of the clock signal. This is specified by the ``posedge`` attribute of a
- signal. The edge specifier is the argument of the ``always`` decorator. As a
- result, the decorated function will be executed on every rising clock edge.
+ The :func:`HelloWorld` function is modified from the first example. It now
+ also takes a clock signal as parameter. Its generator is made sensitive to
+ a rising edge of the clock signal. This is specified by the ``posedge``
+ attribute of a signal. The edge specifier is the argument of the
+ ``always`` decorator. As a result, the decorated function will be executed
+ on every rising clock edge.
 
-La función :func:`HelloWorld` es modificada del primer ejemplo. También
-toma una señal de reloj como parámetro. el generador se hace sensible al
-flanco de subida del: la señal de reloj. Esto se especifica por el atributo
-``postedge`` de una señal. El especificador de flanco es el argumento del
-decorador ``always``. Como un resultado, la función decorada será ejecutada
-en cada flanco de subida del reloj.
+La función :func:`HelloWorld` se modificada a partir del primer ejemplo.
+También toma una señal de reloj como parámetro. El generador se hace
+sensible al flanco de subida de la señal de reloj. Esto es especificado por
+el atributo ``postedge`` de una señal. El especificador de flanco es el
+argumento del decorador ``always``. Como consecuencia, la función decorada
+será ejecutada en cada flanco de subida del reloj.
 
 
 ..
- The ``clk`` signal is constructed with an initial value ``0``. When creating an
- instance of each  hardware module, the same clock signal is passed as the
- argument. The result is that the instances are now connected through the clock
- signal. The :class:`Simulation` object is constructed with the two instances.
+ The ``clk`` signal is constructed with an initial value ``0``. When
+ creating an instance of each  hardware module, the same clock signal is
+ passed as the argument. The result is that the instances are now connected
+ through the clock signal. The :class:`Simulation` object is constructed
+ with the two instances.
 
 
 La señal ``clk`` se contruye con el valor inicial de ``0``. Cuando se crea una

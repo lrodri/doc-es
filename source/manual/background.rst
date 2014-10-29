@@ -121,8 +121,7 @@ ahora obtenemos::
 Cuando se invoca una función generadora, ella retorna un objeto generador.
 Un objeto generador permite el protocolo iterador, que es una manera
 costosa de decir que Ud. puede generar valores subsecuentes invocando el
-método
-:func:`next`::
+método :func:`next`::
 
    >>> g = generator()
    >>> g.next()
@@ -141,19 +140,20 @@ método
    StopIteration
 
 ..
- Now we can generate the subsequent values from the for loop on demand, until
- they are exhausted. What happens is that the :keyword:`yield` statement is like
- a :keyword:`return`, except that it is non-fatal: the generator remembers its
- state and the point in the code when it yielded. A higher order agent can decide
- when to get the next value by calling the generator's :func:`next` method. We
- say that generators are :dfn:`resumable functions`.
+ Now we can generate the subsequent values from the for loop on demand,
+ until they are exhausted. What happens is that the :keyword:`yield`
+ statement is like a :keyword:`return`, except that it is non-fatal: the
+ generator remembers its state and the point in the code when it yielded. A
+ higher order agent can decide when to get the next value by calling the
+ generator's :func:`next` method. We say that generators are
+ :dfn:`resumable functions`.
 
-Ahora podremos generar los valores subsecuentes de el bucle for por
-demanda, hasta que ellos estén exaustos. Qué pasa cuando la instrucción
-:keyword:`yield` es como una instrucción :keyword:`return` excepto que no
-es fatal: el generador recuerda su estado y el punto en el código cuando él
-entrega. Un agente de alto orden puede decidir cuándo tomar el próximo
-valor llamando el método del generador :func:`next` Decimos que los
+Ahora podremos generar los valores subsecuentes del bucle for por demanda,
+hasta que ellos estén agotados. Lo que sucede es que la instrucción
+:keyword:`yield` es como una instrucción :keyword:`return` excepto que es
+recuperable: el generador recuerda el estado y el punto en el código
+donde él lo entrega. Un agente de alto orden puede decidir cuándo obtener el
+próximo valor llamando el método del generador :func:`next`. Decimos que los
 generadores son  :dfn:`resumables functions`
 
 .. index::
@@ -161,34 +161,36 @@ generadores son  :dfn:`resumables functions`
    single: Verilog; always block
 
 ..
- If you are familiar with hardware description languages, this may ring a bell.
- In hardware simulations, there is also a higher order agent, the Simulator, that
- interacts with such resumable functions; they are called  :dfn:`processes` in
- VHDL and  :dfn:`always blocks` in Verilog.  Similarly, Python generators provide
- an elegant and efficient method to model concurrency, without having to resort
- to some form of threading.
+ If you are familiar with hardware description languages, this may ring a
+ bell.  In hardware simulations, there is also a higher order agent, the
+ Simulator, that interacts with such resumable functions; they are called
+ :dfn:`processes` in VHDL and  :dfn:`always blocks` in Verilog.  Similarly,
+ Python generators provide an elegant and efficient method to model
+ concurrency, without having to resort to some form of threading.
 
 Si Ud. está familiarizado con los lenguajes de descripción de hardware,
 esto le puede sonar familiar. En simulaciones de hardware, hay también un
 agente de alto orden,  el simulador, que interactúa con funciones que
-reanudan; ellas son llamadas :dfn:`procesos` en VHDL y :dfn:`blocks always`
-en Verilog. Igualmente, Los generadores Python suministran un método
+reanudan; ellas son llamadas :dfn:`processes` en VHDL y :dfn:`blocks always`
+en Verilog. Igualmente, los generadores Python suministran un método
 elegante y eficiente para modelar concurrencia, sin tener recurrir a algo
 como los hilos.
 
 
 .. index:: single: sensitivity list
 
-The use of generators to model concurrency is the first key concept in MyHDL.
-The second key concept is a related one: in MyHDL, the yielded values are used
-to specify the conditions on which the generator should wait before resuming. In
-other words, :keyword:`yield` statements work as general  sensitivity lists.
+..
+ The use of generators to model concurrency is the first key concept in
+ MyHDL.  The second key concept is a related one: in MyHDL, the yielded
+ values are used to specify the conditions on which the generator should
+ wait before resuming. In other words, :keyword:`yield` statements work as
+ general  sensitivity lists.
 
 El uso de generadores para modelar la concurrencia es el primer concepto
 clave en MyHDL. El segundo concepto clave  es uno relacionado: en MyHDL,
-los valores *yieled* son usados para especificar las condiciones bajo las
+los valores entregados son usados para especificar las condiciones bajo las
 cuales el generador debería esperar antes volver a entrar. En otras
-palabras las instrucciones :keyword:`yield` trabajan como listas sensibles
+palabras las instrucciones :keyword:`yield` trabajan como listas de sensibilidad
 
 .. _deco:
 
@@ -205,21 +207,23 @@ Sobre los decoradores
 
 Python 2.4 introdujo una característica llamada decoradores. MyHDL toma
 ventaja de esta característica mediante la definición de un número de
-decoradores que facilitan las descripciones de hardware.
-Sin embargo, algunos usuarios pueden no estar familiarizados con los
-decoradores. Por lo tanto se incluye una introducción acá.
+decoradores que facilitan las descripciones de hardware.  Sin embargo,
+algunos usuarios pueden no estar familiarizados con los decoradores. Por lo
+tanto, se incluye una introducción acá.
 
 ..
- A decorator consists of special syntax in front of a function declaration. It
- refers to a decorator function. The decorator function automatically transforms
- the declared function into some other callable object.
+ A decorator consists of special syntax in front of a function declaration.
+ It refers to a decorator function. The decorator function automatically
+ transforms the declared function into some other callable object.
 
-Un está compuesto de una sintaxis especial al frente de la declaración de
+Un decorador está compuesto de una sintaxis especial al frente de la declaración de
 una función. Se refiere a una función decorada. La función decorada
 automáticamente transforma la función declarada  en algún otro objeto
 invocable.
 
-A decorator function :func:`deco` is used in a decorator statement as follows::
+..
+ A decorator function :func:`deco` is used in a decorator statement as
+ follows::
 
 Una función decorada :func:`deco()`
 usada en una instrucción de decorado así::
@@ -238,21 +242,23 @@ Este código es equivalente al siguiente::
 
 ..
  Note that the decorator statement goes directly in front of the function
- declaration, and that the function name :func:`func` is automatically reused for
- the final result.
+ declaration, and that the function name :func:`func` is automatically
+ reused for the final result.
 
 
 Observe que la instrucción decoradora va directamente en frente de la
-declaración de la función, y entonces el nombre de la función :func:`func` es
-automáticamente reutilizada para el resultado final.
+declaración de la función, y entonces el nombre de la función :func:`func`
+es automáticamente reutilizada para el resultado final.
  
-..
+.. n
  MyHDL uses decorators to create ready-to-simulate generators from local
  function definitions. Their functionality and usage will be described
  extensively in this manual.
 
 
-MyHDL usa decoradores para crear generadores listos para simular a partir de las definiciones de funciones locales. Su funcionalidad y uso serán descritos extensivamente en este manual.
+MyHDL usa decoradores para crear generadores listos para simular a partir
+de las definiciones de funciones locales. Su funcionalidad y uso serán
+descritos extensivamente en este manual.
 
 .. rubric:: Footnotes
 
