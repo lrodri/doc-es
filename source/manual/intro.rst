@@ -69,7 +69,7 @@ que estén definidos literalmente en el archivo fuente [#]_.
 
 Entonces, definimos una función llamada :func:`HelloWorld`
 En MyHDL, los módulos de hardware se pueden modelar usando funciones
-clásicas. En particular, la lista de parámetros es entonces usada para
+clásicas. En particular, la lista de parámetros se usa para
 definir la interface. En el primer ejemplo, la interface está vacía.
 
 
@@ -82,12 +82,11 @@ definir la interface. En el primer ejemplo, la interface está vacía.
  parameter.  The meaning is that the function will be executed whenever the
  specified delay interval has expired.
 
-Dentro de la función de  nivel superior declaramos una función local llamada
-:func:`sayHello` que define el comportamiento deseado. Esta función está
-decorada con un decorador :func:`always` que tiene como parámetro un objeto retardo. El significado es que la función será ejecutada en el caso que el
-intervalo de retardo especificado halla expirado.
-
-
+Dentro de la función de  nivel superior declaramos una función local
+llamada :func:`sayHello` que define el comportamiento deseado. Esta función
+está decorada con un decorador :func:`always` que tiene como parámetro un
+objeto retardo. Su significado es que la función será ejecutada cuando
+expire el intervalo de retardo especificado.
 
 ..
  Behind the curtains, the :func:`always` decorator creates a Python
@@ -104,11 +103,10 @@ objetos fundamentales en MyHDL, diremos mucho más sobre ellos en el futuro.
  simplest case of the basic MyHDL code pattern to define the contents of a
  hardware module. We will describe the general case further on.
 
-Finalmente, la función de nivel superior retorna el generador local. Esto es
+Finalmente, la función de nivel superior retorna el generador local. Este es
 el caso más simple en la plantilla de código de MyHDL para definir el
 contenido de un módulo de hardware. Describiremos el caso general más
 adelante.
-
 
 ..
  In MyHDL, we create an *instance* of a hardware module by calling the
@@ -121,8 +119,7 @@ En MyHDL, creamos una *instancia* de un módulo de hardware invocando la
 función correspondiente. En el ejemplo la variable ``inst`` se refiere a
 una instancia de :func:`HellowWorld`. Para simular la instancia la pasamos
 como un argumento al objeto constructor :class:`Simulation`. Entonces
-ejecutamos la simulación para la cantidad deseada de intervalos de tiempo.
-
+ejecutamos la simulación la cantidad deseada de intervalos de tiempo.
 
 
 .. _intro-conc:
@@ -150,8 +147,8 @@ de generadores ejecutandose concurrentemente.
 Con la concurrencia viene el problema de la comunicación determinística.
 Los lenguajes de hardware usan objetos especiales para apoyar la
 comunicación deterministica entre código concurrente. En particular,  MyHDL
-tiene un objeto  :class:`Signal`  que es modelado de forma parecida luego
-de las señales VHDL.
+tiene un objeto  :class:`Signal`  que es modelado de forma parecida a
+las señales VHDL.
 
 
 ..
@@ -161,7 +158,7 @@ de las señales VHDL.
 
 Mostraremos señales y concurrencia extendiendo y modificando nuestro primer
 ejemplo.  Definiremos dos módulos de hardware, uno que maneja una señal de
-reloj, y uno  que es sensible al flanco ascendente de una señal de reloj::
+reloj, y otro  que es sensible al flanco ascendente de una señal de reloj::
 
 
    from myhdl import Signal, delay, always, now, Simulation
@@ -209,9 +206,8 @@ reloj, y uno  que es sensible al flanco ascendente de una señal de reloj::
 La función :func:`ClkDriver` tiene una señal de reloj como su parámetro.
 Así es cómo se modela un *puerto* en MyHDL. La función define un generador
 que continuamente cambia una señal de reloj luego de cierto retardo. Se
-especifica un
-nuevo valor de una señal  asignando al atributo ``next``. Esto
-es el equivalente en MyHDL a la asinación de señales en VHDL y la
+especifica un nuevo valor de una señal  asignando al atributo ``next``.
+Esto es el equivalente en MyHDL a la asignación de señales en VHDL y la
 asignación de no-bloqueo en Verilog.
 
 
@@ -225,8 +221,8 @@ asignación de no-bloqueo en Verilog.
  ``always`` decorator. As a result, the decorated function will be executed
  on every rising clock edge.
 
-La función :func:`HelloWorld` se modificada a partir del primer ejemplo.
-También toma una señal de reloj como parámetro. El generador se hace
+La función :func:`HelloWorld` se modifica a partir del primer ejemplo.
+Ahora también toma una señal de reloj como parámetro. El generador se hace
 sensible al flanco de subida de la señal de reloj. Esto es especificado por
 el atributo ``postedge`` de una señal. El especificador de flanco es el
 argumento del decorador ``always``. Como consecuencia, la función decorada
@@ -241,7 +237,7 @@ será ejecutada en cada flanco de subida del reloj.
  with the two instances.
 
 
-La señal ``clk`` se contruye con un valor inicial de ``0``. Cuando se crea una
+La señal ``clk`` se construye con un valor inicial de ``0``. Cuando se crea una
 instancia de cada módulo de hardware, la misma señal de reloj se pasa como
 argumento. El resultado es que las instancias están ahora conectadas a través
 de la señal de reloj. El objeto :class:`Simulation` está construido con las dos
