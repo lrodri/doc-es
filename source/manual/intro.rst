@@ -302,32 +302,33 @@ valor por omisión de ``20``.
 .. index:: single: decorator; instance
 
 ..
- As the low time of the clock may differ from the high time in case of an odd
- period, we cannot use the :func:`always` decorator with a single delay value
- anymore. Instead, the :func:`driveClk` function is now a generator function with
- an explicit definition of the desired behavior. It is decorated with the
- :func:`instance` decorator.  You can see that :func:`driveClk` is a generator
- function because it contains ``yield`` statements.
+ As the low time of the clock may differ from the high time in case of an
+ odd period, we cannot use the :func:`always` decorator with a single delay
+ value anymore. Instead, the :func:`driveClk` function is now a generator
+ function with an explicit definition of the desired behavior. It is
+ decorated with the :func:`instance` decorator.  You can see that
+ :func:`driveClk` is a generator function because it contains ``yield``
+ statements.
 
 
 Como el valor tiempo de bajo del reloj puede diferir del tiempo de alto en
-el caso de un periodo impar, no podemos usar más el decorador :func:`always`
-con un solo valor de retardo. En su lugar, la función :func:`driveClk` es ahora una
-función generadora con una definición explícita del comportamiento deseado.
-Es decorada con el decorador :func:`instance`.
-Se puede ver que :func:`driveClk` es una función generadora porque contiene
-instrucciones ``yield``.
+el caso de un periodo impar, no podemos usar más el decorador
+:func:`always` con un solo valor de retardo. En su lugar, la función
+:func:`driveClk` es una función generadora con una definición
+explícita del comportamiento deseado.  Es decorada con el decorador
+:func:`instance`.  Se puede ver que :func:`driveClk` es una función
+generadora porque contiene instrucciones ``yield``.
 
 ..
- When a generator function is called, it returns a generator object. This is
- basically what the :func:`instance` decorator does. It is less sophisticated
- than the :func:`always` decorator, but it can be used to create a generator from
- any local generator function.
+ When a generator function is called, it returns a generator object. This
+ is basically what the :func:`instance` decorator does. It is less
+ sophisticated than the :func:`always` decorator, but it can be used to
+ create a generator from any local generator function.
 
-Cuando una función generadora es invocada, retorna un objeto generador.
-Esto es básicamente que el decorador :func:`instance`  realiza. Esto es menos
-sofisticado que el decorador :func:`always`, pero se puede usar para crear un
-generador de cualquier función generadora local.
+Cuando se invoca una función generadora, retorna un objeto generador.
+Esto es básicamente que el decorador :func:`instance`  realiza. Esto es
+menos sofisticado que el decorador :func:`always`, pero se puede usar para
+crear un generador de cualquier función generadora local.
 
 
 
@@ -338,18 +339,18 @@ generador de cualquier función generadora local.
  the conditions on which the generator should wait before resuming. In this case,
  the generator waits for a certain delay.
 
-La instrucción ``yield`` es un constructor genera del Python  pero MyHDL lo
-usa de una manera dedicada. En MyHDL, tiene un significado similar que la
+La instrucción ``yield`` es un constructor general de Python  pero MyHDL lo
+usa de una manera dedicada. En MyHDL, él tiene un significado similar que la
 instrucción wait en VHDL: la instrucción suspende la ejecución de un
-generaldor, y esto causa específicamente condiciones en las cuales el
-generarador debería esperara antes de continuar En este caso, el generador
+generador, y esto causa específicamente condiciones en las cuales el
+generarador debería esperar antes de continuar. En este caso, el generador
 espera por un cierto retardo.
 
 ..
- Note that to make sure that the generator runs "forever", we wrap its behavior
- in a ``while True`` loop.
+ Note that to make sure that the generator runs "forever", we wrap its
+ behavior in a ``while True`` loop.
 
-Observe que esté seguro que el generador se ejecute "por siempre" ,
+Esté seguro que el generador se ejecute "indefinidamente" ,
 nosotros encerramos este comportamiento en un bucle ``while True``.
 
 ..
@@ -379,7 +380,7 @@ Podemos crear cualquier número de instancias invocando las funciones con el
 número apropiado de parámetros. La jerarquía se puede modelar definiendo
 las instancias en una función de alto nivel y retornándola. Este patrón
 puede ser repetido para un número arbitrario de niveles de jerarquía.
-Consecuentemente, la definición general de una instancia MyHDL es
+Por lo tanto, la definición general de una instancia MyHDL es
 recursiva: una instancia es una secuencia de instancias, o un generador.
 
 
@@ -387,18 +388,18 @@ recursiva: una instancia es una secuencia de instancias, o un generador.
  As an example, we will create a higher-level function with four instances of the
  lower-level functions, and simulate it::
 
-Como un ejemplo, crearemos una función de alto nivel con cuatro instancias
-de la función de bajo nivel, y simularlas::
+Como ejemplo, crearemos una función de alto nivel con cuatro instancias
+de la función de bajo nivel, y las simulamos::
 
    def greetings():
 
        clk1 = Signal(0)
        clk2 = Signal(0)
 
-       clkdriver_1 = ClkDriver(clk1) # positional and default association
-       clkdriver_2 = ClkDriver(clk=clk2, period=19) # named association 
-       hello_1 = Hello(clk=clk1) # named and default association
-       hello_2 = Hello(to="MyHDL", clk=clk2) # named association
+       clkdriver_1 = ClkDriver(clk1) # asocación posicional: por omision
+       clkdriver_2 = ClkDriver(clk=clk2, period=19) # asociación por nombre
+       hello_1 = Hello(clk=clk1) # asociación posicional: por omisión
+       hello_2 = Hello(to="MyHDL", clk=clk2) # asociación por nombre
 
        return clkdriver_1, clkdriver_2, hello_1, hello_2
 
@@ -442,30 +443,30 @@ La simulación produce la siguiente salida::
  
  Alguna terminología usada comunmente tiene significados diferentes en
  Python y en el diseño de hardware. En lugar de cambiar artifialmente la
- terminología , pienso que es mejor dejar y explícitamente describir las
+ terminología, pienso que es mejor dejarla y explícitamente describir las
  diferencias.
 
    .. index:: single: module; in Python versus hardware design
 
 ..
-  A :dfn:`module` in Python refers to all source code in a particular file. A
-   module can be reused by other modules by importing. In hardware design, a module
-   is  a reusable block of hardware with a well defined interface. It can be reused
-   in  another module by :dfn:`instantiating` it.
+  A :dfn:`module` in Python refers to all source code in a particular file.
+  A module can be reused by other modules by importing. In hardware design,
+  a module is  a reusable block of hardware with a well defined interface.
+  It can be reused in  another module by :dfn:`instantiating` it.
 
- Un :dfn:`*module` en Python se refiere a todo el código fuente en un archivo en
- particular. Un módulolo pueden reutiliar otros módulos importandolos. en el
- diseño de hardware, un módulo es un bloque reutilizable con una interfaz
- completamente definida. Puede ser reutilizada en otro módulo por medio de
- la :dfn:`instantiating`.
+ Un :dfn:`module` en Python se refiere a todo el código fuente en un
+ archivo en particular. Un módulo  puede ser reusado por otros módulos
+ importandolos. En el diseño de hardware, un módulo es un bloque
+ reutilizable con una interfaz completamente definida. Puede ser
+ reutilizada en otro módulo por medio de la :dfn:`instantiating`.
 
   .. index:: single: instance; in Python versus hardware design
 
 
 ..
-  An :dfn:`instance` in Python (and other object-oriented languages) refers to the
-   object created by a class constructor. In hardware design, an instance is a
-   particular incarnation of a hardware module.
+  An :dfn:`instance` in Python (and other object-oriented languages) refers
+  to the object created by a class constructor. In hardware design, an
+  instance is a particular incarnation of a hardware module.
 
 Una :dfn:`instance` en Python (y otros lenguajes orientados a objetos) se
 refiere a los objetos creados por una clase constructora. En el diseño de
@@ -477,7 +478,7 @@ hardware.
    qualify terms  with the words "hardware" or "MyHDL" to  avoid ambiguity.
 
  Normalmente, el significado debería ser claro a partir del contexto.
- Ocasionalmente, Yo puede cualificar términos con las palabras hardware o
+ Ocasionalmente, puedo cualificar términos con las palabras hardware o
  MyHDL para evitar ambigüedades.
 
 .. _intro-python:
@@ -494,10 +495,10 @@ Algunas cosas para resaltar  en MyHDL y Python
  descriptions are very much "pure Python".
 
 Para concluir este capítulo introductorio, es útil recalcar que MyHDL no es
-un lenguaje en sí mismo. El lenguaje subyacente es Python, y MyHDL está
-implementado como un paquete llamado ``myhdl``. Sin embargo un objetivo de
-diseño es dejar myhdl tan pequeño que las descripciones MyHDL sean 
-"Python puro".
+un lenguaje en sí mismo. El lenguaje subyacente es Python y MyHDL está
+implementado como un paquete llamado ``myhdl``. Sin embargoi, un objetivo de
+diseño es dejar el paquete ``myhdl`` tan pequeño que las descripciones MyHDL sean 
+"puro Python".
 
 
 
@@ -518,45 +519,43 @@ Tener Python como lenguaje subyacente es significativo de varias formas:
   large and fast growing user base. Python profits fully from the open source
   development model.
 
-* Python se está mejorando continuamente por muchas mentes brillantes,
-  apoyados por una base de usuarios que crece día a día. Python cumple
+* Python es mejorando continuamente por muchas mentes brillantes,
+  apoyados por una creciente base de usuarios. Python cumple
   completamente con el modelo de desarrollo de software abierto.
 
+..
+ * Python comes with an extensive standard library. Some functionality is
+   likely to be of direct interest to MyHDL users: examples include string
+   handling, regular expressions, random number generation, unit test
+   support, operating system interfacing and GUI development. In addition,
+   there are modules for mathematics, database connections, networking
+   programming, internet data handling, and so on.
+
+* Python viene con una biblioteca estándar grande. Es probable que Algunas
+  funcionalidades sean de interés directo para los usuarios de MyHDL: por
+  ejemplo se incluyen: manipulación de cadenas, expresiones regulares,
+  generación de números aleatorios, pruebas unitarias, interfaces con el
+  sistema operativo  y desarrollo de interfaces gráficas de usuario. Además
+  existen módulos de matemáticas, conexiones a bases de datos, programación
+  de redes, manipulación de datos por internet y aún más.
 
 
 ..
- * Python comes with an extensive standard library. Some functionality is likely
-  to be of direct interest to MyHDL users: examples include string handling,
-  regular expressions, random number generation, unit test support, operating
-  system interfacing and GUI development. In addition, there are modules for
-  mathematics, database connections, networking programming, internet data
-  handling, and so on.
+ * Python has a powerful C extension model. All built-in types are written
+   with the same C API that is available for custom extensions. To a module
+   user, there is no difference between a standard Python module and a C
+   extension module --- except performance. The typical Python development
+   model is to prototype everything in Python until the application is
+   stable, and (only) then rewrite performance critical modules in C if
+   necessary.
 
-* Python viene con una biblioteca estándar grande. Algunas
-    funcionalidades es probable que sean de interés directo para los
-    usuarios de MyHDL: por ejemplo se incluyen: manipulación de cadenas,
-    expresiones regulares, generación de números aleatorios, pruebas
-    unitarias, interfaces con el sistema operativo  y desarrollo de
-    interfaces gráficas de usuario. Además existen módulos de matemáticas,
-    conexiones a bases de datos, programación de redes, manipulación de
-    datos por internet y aún más.
-
-
-..
- * Python has a powerful C extension model. All built-in types are written with
-  the same C API that is available for custom extensions. To a module user, there
-  is no difference between a standard Python module and a C extension module ---
-  except performance. The typical Python development model is to prototype
-  everything in Python until the application is stable, and (only) then rewrite
-  performance critical modules in C if necessary.
-
-* Python tiene un modelo de extensión de C. Todos los tipos primitivos
-  están escritos en el mismo API de C que está disponible en extensiones a
-  la medida. Para un usuario de un módulo, no hy diferencia entre Python
-  estándar y un módulo de extensión de C -excepto en el desempeño. El
-  modelo típico de desarrollo de Python es desarrollar un prototipo para
-  todo en Python hasta que la aplicación sea estable, y sólo entonces
-  reescribir los módulos críticos en C si es necesario.
+* Python tiene un modelo poderoso de extensión de C. Todos los tipos
+  primitivos están escritos en el mismo API de C que está disponible en
+  extensiones a la medida. Para un usuario de un módulo, no hy diferencia
+  entre Python estándar y un módulo de extensión de C -excepto en el
+  desempeño. El modelo típico de desarrollo de Python es desarrollar un
+  prototipo para todo en Python hasta que la aplicación sea estable, y sólo
+  entonces, si es necesario reescribir los módulos críticos en C.
 
 
 
@@ -567,11 +566,11 @@ Resumen y perspectiva
 
 .. Here is an overview of what we have learned in this chapter:
 
-A continuación una hojeada a lo que se aprendió en este capítulo
+A continuación un repaso a lo que se aprendió en este capítulo
 
 ..
-  * Generators are the basic building blocks of MyHDL models. They provide the way
-  to model massive concurrency and sensitivity lists.
+  * Generators are the basic building blocks of MyHDL models. They provide
+    the way to model massive concurrency and sensitivity lists.
 
 * Los generadores son los bloques constructores básicos en los modelos
   MyHDL. Ellos suministran la manera de modelar listas de sensibilidad y
@@ -588,7 +587,9 @@ A continuación una hojeada a lo que se aprendió en este capítulo
 *  La estructura del hardware y su jerarquía se describen con funciones
    típicas de Python.
 
-* :class:`Signal` objects are used to communicate between concurrent generators.
+..
+ * :class:`Signal` objects are used to communicate between concurrent
+   generators.
 
 * Los objetos :class:`Signal` se usan para comunicar generadores concurrentes.
 
@@ -602,8 +603,8 @@ A continuación una hojeada a lo que se aprendió en este capítulo
 Estos conceptos son suficientes para iniciar a modelar y simular con MyHDL
 
 ..
- However, there is much more to MyHDL. Here is an overview of what can be learned
- from the following chapters:
+ However, there is much more to MyHDL. Here is an overview of what can be
+ learned from the following chapters:
 
 Sin embargo hay mucho más en MyHDL. A continuación lo que viene en los
 siguientes capítulos
@@ -627,8 +628,9 @@ siguientes capítulos
 
 
 ..
- * MyHDL enables the use of modern software verification techniques, such as unit
-  testing, on hardware designs. This is the topic of Chapter :ref:`unittest`.
+ * MyHDL enables the use of modern software verification techniques, such
+   as unit testing, on hardware designs. This is the topic of Chapter
+   :ref:`unittest`.
 
 * MyHDL habilita el uso de técnicas modernas de verificación de software
   tales como las pruebas unitarias, en los diseños de hardware. Este tópico
@@ -641,10 +643,10 @@ siguientes capítulos
 * Es posible co-simular modelos MyHDL con otros lenguajes de HDL tales como
   Verilog y VHDL. Esto es descrito en el capítulo co-simulación con Verilog
 
-
 ..
- * Last but not least, MyHDL models can be converted to Verilog, providing a path
-  to a silicon implementation. This is the topic of Chapter :ref:`conv`.
+ * Last but not least, MyHDL models can be converted to Verilog, providing
+   a path to a silicon implementation. This is the topic of Chapter
+   :ref:`conv`.
 
 * Por último si bien no menos importante, los modelos MyHDL se pueden
   convertir en Verilog, suministrando un camino a la implementación en
@@ -653,10 +655,10 @@ siguientes capítulos
 .. rubric:: Footnotes
 
 ..
- .. [#] The exception is the ``from module import *`` syntax, that imports all the
-   symbols from a module. Although this is generally considered bad practice, it
-   can be tolerated for large modules that export a lot of symbols. One may argue
-   that ``myhdl`` falls into that category.
+ .. [#] The exception is the ``from module import *`` syntax, that imports
+ all the symbols from a module. Although this is generally considered bad
+ practice, it can be tolerated for large modules that export a lot of
+ symbols. One may argue that ``myhdl`` falls into that category.
 
 
 .. [#] La excepción es la sintaxis de ``from module import *``
@@ -664,8 +666,6 @@ siguientes capítulos
  en general considerado una mala práctica, puede ser tolerado para módulos
  grandes que exportan una gran cantidad de símbolos. Un podría argumentar
  que  ``myhdl`` cae en esta categoría
-
-
 
 
 .. [#] All positional parameters have to go before any named parameter.

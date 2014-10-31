@@ -21,8 +21,8 @@ La clase  :class:`intbv`
  flavor.
 
 El diseño de hardware involucra tratar con bits y operaciones orientadas a
-bit. el tipo estándar de Python :class:`int` tiene las mayoría de las
-características deseadas, pero adolece del apoyo de indexado y corte. Por esta
+bit. El tipo estándar de Python :class:`int` tiene la mayoría de las
+características necesarias, pero adolece de indexado y corte. Por esta
 razón MyHDL suministra la clase :class:`intbv`. El nombre se escogió para
 sugerir un entero con un sabor a un vector de bits.
 
@@ -43,17 +43,16 @@ operadores tales como una asignación cortada.
 
 ..
  :class:`intbv` supports the same operators as :class:`int` for arithmetic.
- In addition, it provides a number of features to make it
- suitable for hardware design. First, the range of allowed values can
- be constrained. This makes it possible to check the value at run time
- during simulation. Moreover, back end tools can determine the smallest
- possible bit width for representing the object.
- Secondly, it supports bit level operations by providing an indexing
- and slicing interface.
+ In addition, it provides a number of features to make it suitable for
+ hardware design. First, the range of allowed values can be constrained.
+ This makes it possible to check the value at run time during simulation.
+ Moreover, back end tools can determine the smallest possible bit width for
+ representing the object.  Secondly, it supports bit level operations by
+ providing an indexing and slicing interface.
 
 La clase :class:`intvb` apoya los mismos operadores que la clase :class:`int`
 para la artimética. Además, suministra una serie de características para
-hacerla adecuada para el diseño de hardware. Primero el rango de valores
+hacerla adecuada para el diseño de hardware. Primero, el rango de valores
 permitidos se pueden restringir. Esto hace posible examinar el valor en tiempo
 de ejecución durante la simulación. Sin embargo herramientas del motor pueden
 determinar el ancho de bits más pequeño posible para la representación del
@@ -77,7 +76,7 @@ En general los objetos :class:`intbv` son construidos así::
  *max* is exclusive. Therefore, the allowed value range is *min* .. *max*-1.
 
 *val* es el valor inicial. *min* y *max* se pueden usar para limitar el valor.
-Siguiendo las convensiones de Python, *min* es inclusivo y *max* es exclusivo.
+Siguiendo las convensiones de Python, *min* es incluyente y *max* es excluyente.
 Por lo tanto los valores admitidos en el rango es *min* .. *max* -1.
 
 
@@ -102,9 +101,9 @@ restricciones, el objeto es creado así::
  object, we get::
 
 Luego de la creación del objeto, *min* y *max* están disponibles como
-atributos para inspección. También, se  puede utilizar la función estándar de Python
-:func:`len`  para determinar el ancho de los bits. Si inspeccionamos el objeto
-anteriormente creado obtendremos::
+atributos para su inspección. También, se  puede utilizar la función estándar
+de Python :func:`len`  para determinar el ancho de los bits. Si
+inspeccionamos el objeto anteriormente creado obtendremos::
 
 
   >>> print a.min
@@ -119,13 +118,13 @@ anteriormente creado obtendremos::
  are undefined. Likewise, the bit width is undefined, which is indicated
  by a return value ``0``.
 
-Como la instanciación fue sin restricciones, los atributos *min* ty *max*
-están sin definir. Igualmente, el ancho de los bits es indefinido, que está
-indicado por un valor de retorno ``0``
+Como la instanciación fue sin restricciones, los atributos *min* y *max*
+están sin definir. Igualmente, el ancho de los bits está indefinido, lo que se
+indica mediante un valor de retorno de ``0``
 
 .. A constrained :class:`intbv` object is created as follows:
 
-Una clase restringida :class:`intbv` el objeto se crea así::
+Un objeto restringido de  :class:`intbv` se crea así::
 
   >>> a = intbv(24, min=0, max=25)
 
@@ -145,13 +144,13 @@ Inspeccionando el objeto ahora da::
  We see that the allowed value range is 0 .. 24,  and that 5 bits are
  required to represent the object.
 
-Vemos que el rango de valores permitidos es 0 .. 24 y que se necesitan 5 bits
-para poder representar el objeto.
+Vemos que el rango de valores permitidos es 0 .. 24 y que se necesitan 5
+bits para poder representar el objeto.
 
 ..
- Sometimes hardware engineers prefer to constrain an object by defining
- its bit width directly, instead of the range of allowed values.
- The following example shows how to do that::
+ Sometimes hardware engineers prefer to constrain an object by defining its
+ bit width directly, instead of the range of allowed values.  The following
+ example shows how to do that::
 
 Algunas veces los ingenieros de hardware prefieren restringir un objeto
 definiendo los bits directamente, en lugar del rango de valores permitidos.
@@ -162,13 +161,13 @@ El siguiente ejemplo muestra cómo hacer esto::
 ..
  What actually happens here is that first an unconstrained :class:`intbv`
  is created, which is then sliced. Slicing an :class:`intbv` returns a new
- :class:`intbv` with the constraints set up appropriately. 
- Inspecting the object now shows::
+ :class:`intbv` with the constraints set up appropriately.  Inspecting the
+ object now shows::
 
 Lo que sucede acá es que primero se crea una clase sin restricciones
-:class:`intbv`, y luego se corta. Cortar una clase :class:`intbv` retorna una
-nueva clase :class:`intbv` con la restricción fijada apropiadamente. 
-Inspeccionando el objeto muestra::
+:class:`intbv`, y luego se corta. Al cortar una clase :class:`intbv`
+retorna una nueva clase :class:`intbv` con la restricción fijada
+apropiadamente.  Inspeccionando el objeto muestra::
 
   >>> a.min
   0
@@ -185,39 +184,37 @@ Inspeccionando el objeto muestra::
  detail in :ref:`hwtypes-slicing`.
 
 Observe que el atributo *max* es 32, ya que con 5 bits es posible representar
-el rango de 0 .. 31. Creando un :class:`intbv` esta forma tiene la desventaja
-que sólo son posibles rangos positivos . El corte es descrito en más detalle
+el rango de 0 .. 31. Creando un :class:`intbv` de esta forma tiene la desventaja
+que sólo es  posible definir  rangos positivos. El corte es descrito en más detalle
 en :ref:`hwtypes-slicing`.
 
 
 ..
  To summarize, there are two ways to constrain an :class:`intbv` object: by
- defining its bit width, or by defining its value range. The bit
- width method is more traditional in hardware design. However, there
- are two reasons to use the range method instead: to represent
- negative values as observed above, and for fine-grained control over the
- value range.
+ defining its bit width, or by defining its value range. The bit width
+ method is more traditional in hardware design. However, there are two
+ reasons to use the range method instead: to represent negative values as
+ observed above, and for fine-grained control over the value range.
 
 
 Para resumir, hay dos maneras de restringir un objeto :class:`intbv`,
 definiendo su ancho en bits o definiendo el valor del rango. El ancho de bits
 es el método más tradicional en del diseño de hardware. Sin embargo hay dos
 razones para usar el método del rango: representar valores negativos como se
-observó antes, y por un control más fino sobre el rango de valores.
+observó antes, y para un control más detallado sobre el rango de valores.
 
 ..
- Fine-grained control over the value range permits better error
- checking, as there is no need for the *min* and *max* bounds
- to be symmetric or powers of 2. In all cases, the bit width
- is set appropriately to represent all values in 
- the range. For example::
+ Fine-grained control over the value range permits better error checking,
+ as there is no need for the *min* and *max* bounds to be symmetric or
+ powers of 2. In all cases, the bit width is set appropriately to represent
+ all values in the range. For example::
 
 
 El control detallado sobre el rango de valores permite un mejor control de
 errores, debido a que no necesita que los límites  *min* y  *max* sean
-potencias de dos o sean simétricos. En todos los casospotencias de dos o sean
-simétricos. En todos los casos, el ancho del bit se fija apropiadamente para
-representar todos los los valores en el rango. Por ejemplo:: 
+potencias de dos o sean simétricos.  De todas formas, el ancho de bits se
+fija apropiadamente para representar todos los los valores en el rango. Por
+ejemplo:: 
 
     >>> a = intbv(6, min=0, max=7)
     >>> len(a)
@@ -232,7 +229,7 @@ representar todos los los valores en el rango. Por ejemplo::
 
 .. _hwtypes-indexing:
 
-índices de bits
+Índices de bits
 ===============
 
 .. index:: single: bit indexing
@@ -242,17 +239,17 @@ representar todos los los valores en el rango. Por ejemplo::
  is a Gray encoder modeled in MyHDL::
 
 
-Como un ejemplo, consideraremos el diseño de un codificador Gay. El siguiente
+Como ejemplo, consideraremos el diseño de un codificador Gay. El siguiente
 código es un codificador Gray en MyHDL::
 
    from myhdl import Signal, delay, Simulation, always_comb, instance, intbv, bin
 
    def bin2gray(B, G, width):
-       """ Gray encoder.
+       """ Codificador Gray.
 
-       B -- input intbv signal, binary encoded
-       G -- output intbv signal, gray encoded
-       width -- bit width
+       B -- Señal de entrada intbv, codificada en binario natural
+       G -- Señal de salida intbv, codificada en Gray
+       width -- ancho de bits
        """
 
        @always_comb
@@ -263,13 +260,13 @@ código es un codificador Gray en MyHDL::
        return logic
 
 ..
- This code introduces a few new concepts. The string in triple quotes at the
- start of the function is a :dfn:`doc string`. This is standard Python practice
- for structured documentation of code.
+ This code introduces a few new concepts. The string in triple quotes at
+ the start of the function is a :dfn:`doc string`. This is standard Python
+ practice for structured documentation of code.
 
-Este código introduce unos pocos conceptos. La cadena en comillas triples en
-el inicio de la función es un :dfn:`doc string`. Esta es una práctica normal
-en Python para la documentación estructurada del código.
+Este código introduce unos pocos conceptos. La cadena en comillas triples
+en el inicio de la función es un :dfn:`doc string`. Esta es una práctica
+normal en Python para la documentación estructurada del código.
 
 
 .. index::
@@ -278,36 +275,37 @@ en Python para la documentación estructurada del código.
    single: combinatorial logic
 
 ..
- Furthermore, we introduce a third decorator: :func:`always_comb`.  It is used
- with a classic function and specifies that the  resulting generator should wait
- for a value change on any input signal. This is typically used to describe
- combinatorial logic. The :func:`always_comb` decorator automatically infers
- which signals are used as inputs.
+ Furthermore, we introduce a third decorator: :func:`always_comb`.  It is
+ used with a classic function and specifies that the  resulting generator
+ should wait for a value change on any input signal. This is typically used
+ to describe combinatorial logic. The :func:`always_comb` decorator
+ automatically infers which signals are used as inputs.
 
-Además, introdujimo un tercer decorador: :func:`always_comb`. Esto es usado
+Además, introdujimos un tercer decorador: :func:`always_comb`. Esto es usado
 con una función clásica y especifica que el generador resultante debería
 esperar el cambio de un valor ante cualquier señal de entrada. Esto es
 típicamente usado para describir lógica combinacional. El decorador
-:func:`always_comb` automáticamente infiere que señales son usadas como
-entradas.
+:func:`always_comb` automáticamente infiere qué señales son usadas como
+entrada.
 
 
 ..
- Finally, the code contains bit indexing operations and an exclusive-or operator
- as required for a Gray encoder. By convention, the lsb of an :class:`intbv`
- object has index ``0``.
+ Finally, the code contains bit indexing operations and an exclusive-or
+ operator as required for a Gray encoder. By convention, the lsb of an
+ :class:`intbv` object has index ``0``.
 
-Finalmente, el código contien una operación de indexado de bits y un operador
-or-exclusivo como es necesario para un codificador Gary. Por convención, el
-bit menos significativo en un objeto :class:`intbv` tiene un índice ``0``.
+Finalmente, el código contiene una operación con índices de bits y un
+operador or-exclusivo como el que se necesta para un codificador Gray. Por
+convención, el bit menos significativo en un objeto :class:`intbv` tiene un
+índice ``0``.
 
 
 ..
- To verify the Gray encoder, we write a test bench that prints input and output
- for all possible input values::
+ To verify the Gray encoder, we write a test bench that prints input and
+ output for all possible input values::
 
-Para verificar el codificador Gay, hemos escrito una prueba que imprime la
-entrada y la salida de todos los posibles valores de entrada::
+Para verificar el codificador Gay, hemos escrito un banco de pruebas que
+imprime la entrada y la salida de todos los posibles valores de entrada::
 
    def testBench(width):
 
@@ -326,15 +324,15 @@ entrada y la salida de todos los posibles valores de entrada::
        return dut, stimulus
 
 ..
- We use the conversion function :func:`bin` to get a binary string representation of
- the signal values. This function is exported by the :mod:`myhdl` package and
- supplements the standard Python :func:`hex` and :func:`oct` conversion functions.
+ We use the conversion function :func:`bin` to get a binary string
+ representation of the signal values. This function is exported by the
+ :mod:`myhdl` package and supplements the standard Python :func:`hex` and
+ :func:`oct` conversion functions.
 
 Usamos la función de conversión :func:`bin` para obtener una representación
-binaria de los valores de la señal. Esta función es exportada por el paquete
-:mod:`myhdl` y complementa las funciones de conversiópn estándar de Python :func:`hex` y
-:func:`oct`.
-
+binaria de los valores de la señal. Esta función es exportada por el
+paquete :mod:`myhdl` y complementa las funciones de conversión estándar de
+Python :func:`hex` y :func:`oct`.
 
 
 .. As a demonstration, we set up a simulation for a small width::
@@ -374,17 +372,18 @@ Cortar bits
  slicing.  The following function calculates the HEC byte of an ATM header. ::
 
 
-Para un cambio, usaremos una función tradicional como un ejemplo para ilustrar
-el corte.  La siguiente función calcula el valor HEC de una encabezado ATM. ::
+Por variar, usaremos una función tradicional como ejemplo para ilustrar
+el corte.  La siguiente función calcula el valor HEC de una encabezado ATM.::
 
    from myhdl import intbv, concat
 
    COSET = 0x55
 
    def calculateHec(header):
-       """ Return hec for an ATM header, represented as an intbv.
+       """ Retorna el HEC (Header Error Control/Check) de un encabezado
+       ATM, prepresentado como un intbv
 
-       The hec polynomial is 1 + x + x**2 + x**8.
+       El polinomio HEC es 1 + x + x**2 + x**8.
        """
        hec = intbv(0)
        for bit in header[32:]:
@@ -402,50 +401,51 @@ el corte.  La siguiente función calcula el valor HEC de una encabezado ATM. ::
  also demonstrates concatenation of :class:`intbv` objects.
 
 
-Este código muestrá como se accede y se asigna el corte, es permitido por
-el tipo de dato :class:`intbv`. De acuerdo con la convención más común de
-hardware, y a diferencia de la norma en Python, los rangos de corte son
-descendentes. El código también demuestra la concatenación de objetos
-:class:`intbv`.
+El código muestra cómo se accede al corte y cómo se asigna el corte, lo que
+es permitido por el tipo de dato :class:`intbv`. De acuerdo con la
+convención más común de hardware, y a diferencia de la norma en Python, los
+rangos de corte son descendentes. El código también demuestra la
+concatenación de objetos :class:`intbv`.
 
 
 ..
- As in standard Python, the slicing range is half-open: the highest index bit is
- not included. Unlike standard Python however, this index corresponds to the
- *leftmost* item. Both indices can be omitted from the slice. If the leftmost
- index is omitted, the meaning is to access "all" higher order bits.  If the
- rightmost index is omitted, it is ``0`` by default.
+ As in standard Python, the slicing range is half-open: the highest index
+ bit is not included. Unlike standard Python however, this index
+ corresponds to the *leftmost* item. Both indices can be omitted from the
+ slice. If the leftmost index is omitted, the meaning is to access "all"
+ higher order bits.  If the rightmost index is omitted, it is ``0`` by
+ default.
 
-Como en el Python estándar, el rango de corte es medio-abierto: el índice de
-bit mayor no es incluido. A diferencia de Python estándar sin embargo, este
-índice corresponde al ítem del *extremo izquierdo*. Ambos índices se pueden
-omitir del corte. Si el índice del extremo izquierdo se omite, el significado
-es acceder a "todos" los bits de orden superior. si el bit del extremo derecho
-se omite, este es ``0`` por omisión.
-
-..
- The half-openness of a slice may seem awkward at first, but it helps to avoid
- one-off count issues in practice. For example, the slice ``hex[8:]`` has exactly
- ``8`` bits. Likewise, the slice ``hex[7:2]`` has ``7-2=5`` bits. You can think
- about it as follows: for a slice ``[i:j]``, only bits below index ``i`` are
- included, and the bit with index ``j`` is the last bit included.
-
-
-La apertura media de un corte puede parecer ilógica en primera instancia, pero
-ayuda ayuda a 
-*one-off count issues in practice*. Por ejemplo, el corte 
-``hex[8:]`` tiene exactamente
-``8`` bits. Igualmente el corte ``hex[7:2]`` tiene  ``7-2=5`` bits. 
-Puede pensar así: para un corte 
-``[i:j]``, sólo los bits abajo del índice ``i`` son 
-incluidos y el bit con índice ``j`` es el último bit incluido. 
+Como en Python estándar, el rango de corte es medio-abierto: no se incluye
+el índice mayor. A diferencia de Python estándar, este índice corresponde
+al ítem del *extremo izquierdo*. Ambos índices se pueden omitir del corte.
+Si el índice del extremo izquierdo se omite, el significado es acceder a
+"todos" los bits de orden superior. Si el bit del extremo derecho se omite,
+éste es ``0`` por omisión.
 
 ..
- When an :class:`intbv` object is sliced, a new :class:`intbv` object is returned. 
- This new :class:`intbv` object is always positive, and the value bounds are
- set up in accordance with the bit width specified by the slice. For example::
+ The half-openness of a slice may seem awkward at first, but it helps to
+ avoid one-off count issues in practice. For example, the slice ``hex[8:]``
+ has exactly ``8`` bits. Likewise, the slice ``hex[7:2]`` has ``7-2=5``
+ bits. You can think about it as follows: for a slice ``[i:j]``, only bits
+ below index ``i`` are included, and the bit with index ``j`` is the last
+ bit included.
 
-Cuando se corta un objeto :class:`intbv`, se retorna un nuevo objejo
+
+La apertura media de un corte puede parecer ilógica en primera instancia,
+pero ayuda a *one-off count issues in practice*. Por ejemplo, el corte
+``hex[8:]`` tiene exactamente ``8`` bits. Igualmente el corte ``hex[7:2]``
+tiene  ``7-2=5`` bits.  Puede pensar así: para un corte ``[i:j]``, sólo los
+bits abajo del índice ``i`` son incluidos y el bit con índice ``j`` es el
+último bit incluido. 
+
+..
+ When an :class:`intbv` object is sliced, a new :class:`intbv` object is
+ returned.  This new :class:`intbv` object is always positive, and the
+ value bounds are set up in accordance with the bit width specified by the
+ slice. For example::
+
+Cuando se corta un objeto :class:`intbv`, se retorna un nuevo objeto
 :class:`intbv`. Este nuevo :class:`intbv` es siempre positivo, y los
 límites se fijan de acuerdo con el ancho de bits especificado por el corte.
 Por ejemplo::
@@ -464,10 +464,10 @@ Por ejemplo::
     16
 
 ..
- In the example, the original object is sliced with a slice equal to its bit width.
- The returned object has the same value and bit width, but its value
- range consists of all positive values that can be represented by
- the bit width.
+ In the example, the original object is sliced with a slice equal to its
+ bit width.  The returned object has the same value and bit width, but its
+ value range consists of all positive values that can be represented by the
+ bit width.
 
 En el ejemplo, el objeto original es cortado con un corte igual a su ancho
 de bits. El objeto retornado tiene el mismo valor y ancho de bits, pero su
@@ -475,8 +475,8 @@ rango de valores es positivo con el rango que se puede representar por el
 ancho de bits.
 
 ..
- The object returned by a slice is positive, even when the
- original object is negative::
+ The object returned by a slice is positive, even when the original object
+ is negative::
 
 El objeto retornado por un corte es positivo, aún cuando el objeto original
 sea negativo::
@@ -494,7 +494,7 @@ sea negativo::
  The bit pattern of the two objects is identical within the bit width,
  but their values have opposite sign.
 
-El patrón de bits de dos objetos es idéntico en el ancho de bits, pero sus
+El patrón de bits de los dos objetos tienen igual número  de bits, pero sus
 valores son de signo opuesto.
 
 .. _hwtypes-modbv:
@@ -507,11 +507,11 @@ The :class:`modbv` class
  wrap-around behavior. :class:`intbv` instances do not support this
  automatically, as they assert that any assigned value is within the bound
  constraints. However, wrap-around modeling can be straightforward.  For
- example, the wrap-around condition for a counter is often decoded explicitly,
- as it is needed for other purposes. Also, the modulo operator provides an
- elegant one-liner in many scenarios::
+ example, the wrap-around condition for a counter is often decoded
+ explicitly, as it is needed for other purposes. Also, the modulo operator
+ provides an elegant one-liner in many scenarios::
 
-En el modelamiento de hardware, existe a menudo la necesidad de el
+En el modelamiento de hardware, existe a menudo la necesidad del
 modelamiento elegante de comportamiento envolvente. La instancias de
 :class:`intbv` no permiten esto automáticamente, debido a que ellas afirman
 que cualquier valor asignado están dentro de los límites de su restricción.
