@@ -12,7 +12,7 @@
 :map! :r :ref:`
 :map! :m :mod:`
 :map! :p :program:`
-
+:map! m: :meth:`
 
 
 "" orden para definir diccionario personal
